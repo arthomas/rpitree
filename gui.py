@@ -25,7 +25,6 @@ class Gui(QWidget):
 
     def __init__(self):
         super().__init__()
-        sip.setapi("QString", 2)
         self.process = False
         self.controlled = LedControl()
         self.ledCombo = QComboBox()
