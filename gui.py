@@ -39,25 +39,25 @@ class Gui(QWidget):
         self.delayCombo = QComboBox()
         for i in range(0, 11):
             self.delayCombo.addItem(str(i/10))
-        self.randomCombo = QComboBox()
-        self.randomCombo.addItem("No")
-        self.randomCombo.addItem("Yes")
+        self.sequenceCombo = QComboBox()
+        self.sequenceCombo.addItem("None")
+        self.sequenceCombo.addItem("Random")
         self.initUI()
 
     def initUI(self):
         layout = QGridLayout()
         self.setLayout(layout)
         ledtext = QLabel("LED")
-        randomtext = QLabel("Random?")
+        sequencetext = QLabel("Sequence")
         delaytext = QLabel("Delay")
         valuetext = QLabel("Value")
         applybutton = QPushButton("Apply")
         applybutton.clicked.connect(self.apply)
-        layout.addWidget(randomtext, 0, 0)
+        layout.addWidget(sequencetext, 0, 0)
         layout.addWidget(ledtext, 1, 0)
         layout.addWidget(delaytext, 2, 0)
         layout.addWidget(valuetext, 3, 0)
-        layout.addWidget(self.randomCombo, 0, 1)
+        layout.addWidget(self.sequenceCombo, 0, 1)
         layout.addWidget(self.ledCombo, 1, 1)
         layout.addWidget(self.delayCombo, 2, 1)
         layout.addWidget(self.valueCombo, 3, 1)
@@ -70,12 +70,12 @@ class Gui(QWidget):
 
     def apply(self):
         led = self.ledCombo.currentText()
-        random = self.randomCombo.currentIndex()
+        sequence = self.sequenceCombo.currentIndex()
         delay = self.delayCombo.currentText()
         value = self.valueCombo.currentText()
         if self.process:
             self.process.terminate()
-        self.process = Process(target=self.controlled.ledchange, args=(led, random, delay, value))
+        self.process = Process(target=self.controlled.ledchange, args=(led, sequence, delay, value))
         self.process.start()
 
 
